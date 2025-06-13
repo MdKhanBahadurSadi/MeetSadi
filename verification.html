@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom right, #87CEEB, #5CACEE);
+            color: white;
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(135, 206, 235, 0.5) 0%, rgba(92, 172, 238, 0.5) 100%);
+            background-size: 200% 200%;
+            animation: gradientMove 15s ease infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .verification-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 30px 40px -10px rgba(0, 0, 0, 0.4), 0 12px 15px -8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 32rem;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInScale 0.8s ease-out forwards;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9) rotateX(10deg); }
+            to { opacity: 1; transform: scale(1) rotateX(0deg); }
+        }
+
+        .verification-card h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #e0ffff;
+            text-shadow: 0 0 10px rgba(224, 255, 255, 0.7);
+            animation: slideInTop 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideInTop {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verification-card p {
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            color: #e0e7ed;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .verification-button {
+            background-color: #38bdf8;
+            color: white;
+            font-weight: 700;
+            padding: 1rem 2.2rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            flex-grow: 1;
+            max-width: 140px;
+        }
+
+        .verification-button:hover {
+            background-color: #0ea5e9;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .verification-button:active {
+            transform: translateY(-2px) scale(0.98);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .verification-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0%;
+            height: 0%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+            z-index: 0;
+        }
+
+        .verification-button:hover::before {
+            width: 300%;
+            height: 300%;
+            opacity: 1;
+        }
+
+        .verification-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .message {
+            margin-top: 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f87171;
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+
+        .success-message {
+            margin-top: 2.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #84cc16;
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .success-message svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-card">
+        <h1>Verify You Are a Human</h1>
+        <p>Are you stands with Palestine?</p>
+        <div class="button-container">
+            <button class="verification-button" id="yesButton"><span>Yes</span></button>
+            <button class="verification-button" id="noButton"><span>No</span></button>
+        </div>
+        <p class="message" id="errorMessage"></p>
+        <p class="success-message" id="successMessage">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.323 4.106-1.682-1.682a.75.75 0 1 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+            </svg>
+            Verification Complete!
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yesButton = document.getElementById('yesButton');
+            const noButton = document.getElementById('noButton');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            yesButton.addEventListener('click', () => {
+                errorMessage.classList.remove('show');
+                successMessage.classList.add('show');
+                setTimeout(() => {
+                    window.location.href = 'https://sites.google.com/view/khanbahadursadi/';
+                }, 1500);
+            });
+
+            noButton.addEventListener('click', () => {
+                successMessage.classList.remove('show');
+                errorMessage.textContent = 'Sorry, You are not a human! No one except humans is allowed to view the Bio-data.';
+                errorMessage.classList.add('show');
+            });
+        });
+    </script>
+</body>
+</html>
